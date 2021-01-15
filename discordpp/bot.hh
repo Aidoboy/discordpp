@@ -9,12 +9,12 @@
 #include <vector>
 
 #include "botStruct.hh"
-#include "log.hh"
 #include "intents.hh"
+#include "log.hh"
+#include "snowflake.hh"
 
 namespace discordpp {
 using json = nlohmann::json;
-using snowflake = uint64_t;
 
 class Bot : public virtual BotStruct {
     std::unique_ptr<boost::asio::steady_timer> reconnect_;
@@ -125,6 +125,9 @@ class Bot : public virtual BotStruct {
             } else {
                 for (auto handler = handlers.lower_bound(payload["t"]);
                      handler != handlers.upper_bound(payload["t"]); handler++) {
+                    log::log(log::trace, [handler](std::ostream *log) {
+                      *log << "Handling: " << handler->first << '\n';
+                    });
                     handler->second(payload["d"]);
                 }
             }
