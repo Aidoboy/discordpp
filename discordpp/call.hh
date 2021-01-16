@@ -12,12 +12,14 @@
 
 namespace discordpp {
 struct Call {
+    Call() {}
+
     Call(sptr<const std::string> requestType, sptr<const std::string> targetUrl,
          sptr<const json> body, sptr<const handleWrite> onWrite,
          sptr<const handleRead> onRead)
-        : requestType(std::move(requestType)), targetURL(std::move(targetUrl)),
-          body(std::move(body)), onWrite(std::move(onWrite)),
-          onRead(std::move(onRead)) {}
+        : requestType_(std::move(requestType)), targetURL_(std::move(targetUrl)),
+          body_(std::move(body)), onWrite_(std::move(onWrite)),
+          onRead_(std::move(onRead)) {}
 
     /*Call(sptr<const std::string> requestType, sptr<const std::string> targetUrl,
          sptr<const handleWrite> onWrite, sptr<const handleRead> onRead)
@@ -53,10 +55,10 @@ struct Call {
         : requestType(std::move(requestType)), targetURL(std::move(targetUrl)) {
     }*/
 
-    sptr<const std::string> requestType;
-    sptr<const std::string> targetURL;
-    sptr<const json> body = nullptr;
-    sptr<const handleWrite> onWrite = nullptr;
-    sptr<const handleRead> onRead = nullptr;
+    sptr<const std::string> requestType_ = nullptr;
+    sptr<const std::string> targetURL_ = nullptr;
+    sptr<const json> body_ = nullptr;
+    sptr<const handleWrite> onWrite_ = nullptr;
+    sptr<const handleRead> onRead_ = nullptr;
 };
 } // namespace discordpp
